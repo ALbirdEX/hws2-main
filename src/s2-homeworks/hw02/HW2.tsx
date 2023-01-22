@@ -3,30 +3,31 @@ import Affairs from './affairs/Affairs'
 import s2 from '../../s1-main/App.module.css'
 
 /*
-* 1 - описать типы AffairPriorityType, AffairType
-* 2 - указать нужный тип для defaultAffairs
-* 3 - дописать типы и логику функции filterAffairs и проверить её тестами
-* 4 - выполнить пункт 3 для функции deleteAffair
-* 5 - указать нужный тип в useState с affairs
-* 6 - дописать тип и логику функции deleteAffairCallback
-* 7 - в файле Affairs.tsx дописать типизацию пропсов
-* 8 - в файле Affairs.tsx дописать логику функций setAll, setHigh, setMiddle, setLow
-* 9 - в файле Affair.tsx дописать типизацию пропсов
-* 10 - в файле Affair.tsx дописать функции deleteCallback и использовать
-* 11 - в файле Affair.tsx отобразить приходящие данные
+* 1 - описать типы AffairPriorityType, AffairType ++
+* 2 - указать нужный тип для defaultAffairs +
+* 3 - дописать типы и логику функции filterAffairs и проверить её тестами +
+* 4 - выполнить пункт 3 для функции deleteAffair +
+* 5 - указать нужный тип в useState с affairs +
+* 6 - дописать тип и логику функции deleteAffairCallback +
+* 7 - в файле Affairs.tsx дописать типизацию пропсов +
+* 8 - в файле Affairs.tsx дописать логику функций setAll, setHigh, setMiddle, setLow +
+* 9 - в файле Affair.tsx дописать типизацию пропсов +
+* 10 - в файле Affair.tsx дописать функции deleteCallback и использовать +
+* 11 - в файле Affair.tsx отобразить приходящие данные +
 * */
 
 // types
-export type AffairPriorityType = 'high' | 'low' | 'middle'  // need to fix any
+export type AffairPriorityType = "low" | "middle" | "high"; // need to fix any
+
 export type AffairType = {
     _id: number // need to fix any
     name: string // need to fix any
     priority: AffairPriorityType
 }
-export type FilterType = 'all' | AffairPriorityType
+export type FilterType = "all" | AffairPriorityType
 
 // constants
-const defaultAffairs: Array<AffairType> = [ // need to fix any
+const defaultAffairs: AffairType[] = [ // need to fix any
     {_id: 1, name: 'React', priority: 'high'}, // студенты могут изменить содержимое name и количество элементов в массиве, ...priority не менять!
     {_id: 2, name: 'anime', priority: 'low'},
     {_id: 3, name: 'games', priority: 'low'},
@@ -36,14 +37,25 @@ const defaultAffairs: Array<AffairType> = [ // need to fix any
 
 // pure helper functions
 export const filterAffairs = (affairs: AffairType[], filter: FilterType): AffairType[] => { // need to fix any
-    if (filter === 'all') return affairs // need to fix
-    else if (filter === 'low') return affairs.filter(af => af.priority === 'low')
-    else if (filter === 'high') return affairs.filter(af => af.priority === 'high')
-    else if (filter==='middle') return affairs.filter(af => af.priority === 'middle')
-    else return []
+    switch (filter) {
+        case "all":
+            return affairs
+        case "low":
+            return affairs.filter(a => a.priority === "low")
+        case "middle":
+            return affairs.filter(a => a.priority === "middle")
+        case "high":
+            return affairs.filter(a => a.priority === "high")
+        default:
+            return []
+    }
+
+
+    //return affairs.filter(af => af.priority === filter)// need to fix
 }
-export const deleteAffair = (affairs: Array<AffairType>, _id: number): Array<AffairType> => { // need to fix any
-    return affairs.filter(af => af._id !== _id) // need to fix
+export const deleteAffair = (affairs: AffairType[], _id: number): AffairType[] => { // need to fix any
+
+    return affairs.filter((affair) => affair._id !== _id) // need to fix
 }
 
 function HW2() {
@@ -52,7 +64,8 @@ function HW2() {
 
     const filteredAffairs = filterAffairs(affairs, filter)
     const deleteAffairCallback = (_id: number) => { // need to fix any
-        setAffairs(deleteAffair(affairs, _id))// need to fix
+        // need to fix
+       setAffairs(deleteAffair(affairs, _id))
     }
 
     return (
